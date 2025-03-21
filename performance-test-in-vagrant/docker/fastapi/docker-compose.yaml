@@ -1,0 +1,15 @@
+version: '3'
+
+x-default-logging: &logging
+  driver: "json-file"
+  options:
+    max-size: "5m"
+    max-file: "2"
+
+services:
+  fastapi:
+    container_name: fastapi
+    image: fastapi:latest
+    restart: on-failure
+    network_mode: host
+    logging: *logging
