@@ -15,11 +15,3 @@ wget https://github.com/docker/compose/releases/download/v2.34.0/docker-compose-
 mv docker-compose-linux-aarch64 /usr/bin/docker-compose
 chmod +x /usr/bin/docker-compose
 chmod o+rw /var/run/docker.sock
-# Disk 용량 증설
-parted /dev/sda print
-parted /dev/sda resizepart 3 100%
-pvresize /dev/sda3
-vgdisplay
-lvdisplay
-lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
-resize2fs /dev/ubuntu-vg/ubuntu-lv

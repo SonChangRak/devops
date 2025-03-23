@@ -1,0 +1,45 @@
+executor: KubernetesExecutor
+
+airflow:
+  image:
+    repository: apache/airflow
+    tag: 2.9.3
+
+config:
+  core:
+    default_timezone: 'Asia/Seoul'
+    dags_are_paused_at_creation: 'False'
+    dagbag_import_timeout: 60
+    test_connection: 'Enalbed'
+    load_examples: 'False'
+  logging:
+    logging_level: 'INFO'
+    fab_logging_level: 'INFO'
+  webserver:
+    default_ui_timezone: 'Asia/Seoul'
+    default_wrap: 'True'
+    enable_proxy_fix: 'True'
+  scheduler:
+    enable_health_check: 'True'
+
+ingress:
+  enabled: true
+  ingressClassName: nginx
+  web:
+    path: /
+    hosts:
+      - airflow.local
+  extraPaths:
+    - path: /
+      pathType: Prefix
+      backend:
+        service:
+          name: airflow-web
+          port:
+            number: 8080
+
+postgresql:
+  enabled: true
+
+redis:
+  enabled: true

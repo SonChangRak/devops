@@ -37,7 +37,6 @@ end
 ## 4. init script 작성
 ```shell
 #!/bin/bash
-#!/bin/bash
 set -e
 
 whoami
@@ -79,23 +78,38 @@ vagrant halt
 ```bash
 vagrant destroy
 ```
-## 9. fastpi 구동
+## 9. Disk 증설
+```bash
+sudo su - 
+
+# Disk 용량 증설
+parted /dev/sda print
+parted /dev/sda resizepart 3 100%
+pvresize /dev/sda3
+vgdisplay
+lvdisplay
+lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
+resize2fs /dev/ubuntu-vg/ubuntu-lv
+```
+
+`Fix/Ingnore?` 나올 시 `Fix` 입력 후 `Enter`
+## 10. fastpi 구동
 ```bash
 cd /vagrant/docker/fastapi
 docker build -t fastapi .
 docker-compose up -d
 ```
-## 10. locust 구동
+## 11. locust 구동
 ```bash
 cd /vagrant/docker/locust
 docker-compose up -d
 ```
-## 11. netdata 구동
+## 12. netdata 구동
 ```bash
 cd /vagrant/docker/netdata
 docker-compose up -d
 ```
-## 12. 로컬 성능테스트
+## 13. 로컬 성능테스트
 1. locust 접속 (http://localhost:8089)
 2. 아래 내용으로 load test 시작
     - User: 10

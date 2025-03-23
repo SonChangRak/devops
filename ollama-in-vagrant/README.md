@@ -39,7 +39,6 @@ end
 ## 4. init script 작성
 ```shell
 #!/bin/bash
-#!/bin/bash
 set -e
 
 whoami
@@ -56,14 +55,6 @@ wget https://github.com/docker/compose/releases/download/v2.34.0/docker-compose-
 mv docker-compose-linux-aarch64 /usr/bin/docker-compose
 chmod +x /usr/bin/docker-compose
 chmod o+rw /var/run/docker.sock
-# Disk 용량 증설
-parted /dev/sda print
-parted /dev/sda resizepart 3 100%
-pvresize /dev/sda3
-vgdisplay
-lvdisplay
-lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
-resize2fs /dev/ubuntu-vg/ubuntu-lv
 ```
 ## 5. Vagrant up
 ```bash
@@ -81,7 +72,22 @@ vagrant halt
 ```bash
 vagrant destroy
 ```
-## 9. Ollama 설치
+## 9. Disk 증설
+```bash
+sudo su - 
+
+# Disk 용량 증설
+parted /dev/sda print
+parted /dev/sda resizepart 3 100%
+pvresize /dev/sda3
+vgdisplay
+lvdisplay
+lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
+resize2fs /dev/ubuntu-vg/ubuntu-lv
+```
+
+`Fix/Ingnore?` 나올 시 `Fix` 입력 후 `Enter`
+## 10. Ollama 설치
 https://github.com/mythrantic/ollama-docker <br>
 필요한 파일<br>
   * Dockerfile
@@ -91,7 +97,7 @@ https://github.com/mythrantic/ollama-docker <br>
 cd /vagrant/docker/ollama
 docker-compose up -d
 ```
-## 10. Ollama 사용
+## 11. Ollama 사용
 http://localhost:8080<br>
 모델: gemma3:4b<br>
 `설정 > 관리자 설정 > 모델 접속 후 다운로드`<br>
