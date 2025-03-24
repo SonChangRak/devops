@@ -1,0 +1,5 @@
+ansible-node:
+  hosts:
+    ansible-node01: 
+      ansible_host: 192.168.5.104
+      ansible_user: vagrant
