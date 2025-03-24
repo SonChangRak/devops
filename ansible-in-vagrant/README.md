@@ -1,4 +1,4 @@
-# Vagrant 를 활용한 ollama 로컬 환경 구축
+# Vagrant 를 활용한 Ansible playbook 환경 구축
 ## 1. Vagrant install
 ```bash
 brew install vagrant
